@@ -1,0 +1,19 @@
+##### Global files
+ 
+*.zip
+.svn
+.DS_Store
+thumbs.db
+ 
+ 
+##### Codeigniter files
+ 
+*/config/development
+*/logs/log-*.php
+*/logs/!index.html
+*/cache/*
+*/cache/!index.html
+/user_guide/
+ 
+/nbproject/
+/application/config/database.php
