@@ -49,13 +49,15 @@ class AJW extends CI_Controller {
         $this->load->view('inventory_view');
     }
     
-    public function display($slug) {
+    public function display($recipe_id) {
         $data['title'] = 'display';
         
-        $data['recipe'] = $this->yummly_model->get_recipe($slug);
+        $data['recipe'] = $this->yummly_model->get_recipe($recipe_id);
         $this->load->view('header_template', $data);
         $this->load->view('display_view', $data);
     }
     
 
 }
+/* End of file ajw.php */
+/* Location: ./application/controllers/ajw.php */
