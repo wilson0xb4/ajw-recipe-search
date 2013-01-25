@@ -37,30 +37,15 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-// test routing
-$route['ajw/search_results'] = 'ajw/search_results';
-$route['ajw/display'] = 'ajw/display';
 
 // app routings
-$route['settings'] = 'ajw/settings';
-$route['inventory'] = 'ajw/inventory';
-$route['search/(:any)'] = 'ajw/search/$1';
-$route['display/(:any)'] = 'ajw/display/$1';
 $route['ajw/display/(:any)'] = 'ajw/display/$1';
-$route['search'] = 'ajw/search';
 $route['ajw/settings'] = 'ajw/settings';
 $route['ajw/inventory'] = 'ajw/inventory';
 $route['ajw/search/(:any)'] = 'ajw/search/$1';
 $route['ajw/search'] = 'ajw/search';
-//$route['ajw/home'] = 'ajw';
-//$route['ajw'] = 'ajw/search';
 
-// tutorial examples
-$route['news/create'] = 'news/create';
-$route['news/(:any)'] = 'news/view/$1';
-$route['news'] = 'news';
-
-$route['default_controller'] = 'ajw';
+$route['default_controller'] = 'ajw/search';
 $route['(:any)'] = 'ajw/$1';
 
 

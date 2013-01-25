@@ -11,8 +11,8 @@ class AJW extends CI_Controller {
     public function index() {
         $data['title'] = 'home';
         
-        $this->load->view('templates/header', $data);
-        $this->load->view('ajw/index');
+        $this->load->view('header_template', $data);
+        $this->load->view('index_view');
     }
     
     public function search() {
@@ -24,13 +24,13 @@ class AJW extends CI_Controller {
         $this->form_validation->set_rules('search_phrase', 'search', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('ajw/search');
+            $this->load->view('header_template', $data);
+            $this->load->view('search_view');
         } else {
             
             $data['yummly'] = $this->yummly_model->search_recipes();
-            $this->load->view('templates/header', $data);
-            $this->load->view('ajw/search_results', $data);
+            $this->load->view('header_template', $data);
+            $this->load->view('search_results_view', $data);
         }
 
     }
@@ -38,23 +38,23 @@ class AJW extends CI_Controller {
     public function settings() {
         $data['title'] = 'settings';
         
-        $this->load->view('templates/header', $data);
-        $this->load->view('ajw/settings');
+        $this->load->view('header_template', $data);
+        $this->load->view('settings_view');
     }
     
     public function inventory() {
         $data['title'] = 'inventory';
         
-        $this->load->view('templates/header', $data);
-        $this->load->view('ajw/inventory');
+        $this->load->view('header_template', $data);
+        $this->load->view('inventory_view');
     }
     
     public function display($slug) {
         $data['title'] = 'display';
         
         $data['recipe'] = $this->yummly_model->get_recipe($slug);
-        $this->load->view('templates/header', $data);
-        $this->load->view('ajw/display', $data);
+        $this->load->view('header_template', $data);
+        $this->load->view('display_view', $data);
     }
     
 
