@@ -21,7 +21,7 @@ class AJW extends CI_Controller {
 
         $data['title'] = 'Search';
 
-        $this->form_validation->set_rules('search_phrase', 'search', 'required');
+        $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('header_template', $data);

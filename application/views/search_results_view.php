@@ -1,11 +1,11 @@
 <h2>Search Results</h2>
 
 <div class="attribution">
-    <?php echo $yummly['attribution']['html']; ?>    
+    <?php echo $yummly['attribution']['html']; ?> 
 </div>
 
 <div class="search_meta">
-    <?php echo 'Total Matches Found: ' . $yummly['totalMatchCount'] . ', showing 10.'; ?>
+    <?php echo 'Searched for: "' . $yummly['submitted_query'] . '", Total Matches Found: ' . $yummly['totalMatchCount'] . ', Showing 10.'; ?> 
 </div>
 
 <?php foreach ($yummly['matches'] as $recipe): ?>
@@ -31,6 +31,7 @@
     
     <hr />
 </section>
+
 <?php endforeach ?>
 
 <p>end of results</p>
