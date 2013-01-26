@@ -4,7 +4,6 @@ class AJW extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->load->helper('url');
         $this->load->model('yummly_model');
     }
     
@@ -17,7 +16,7 @@ class AJW extends CI_Controller {
         $this->load->view('footer_template');
     }
     
-    public function search() {
+   public function search() {
         $this->load->helper('form');
         $this->load->library('form_validation');
 

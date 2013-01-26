@@ -2,10 +2,6 @@
     
     <h2>Search Results</h2>
 
-    <div class="attribution">
-        <?php echo $yummly['attribution']['html']; ?> 
-    </div>
-
     <div class="search_meta">
         <?php echo 'Searched for: "' . $yummly['submitted_query'] 
                 . '", Total Matches Found: ' . $yummly['totalMatchCount'] 
@@ -42,7 +38,7 @@
                 echo $ingredient . '<br />';
             } ?>
             
-			<p>Source: <?php echo $recipe['sourceDisplayName']; ?></p>
+            <p>Source: <cite><?php echo $recipe['sourceDisplayName']; ?></cite></p>
 
 			<p><a href="<?php echo site_url('ajw/display/' . $recipe['id']) ?>" class="more-link">View more <span class="meta-nav">&rarr;</span></a></p>
 		
@@ -52,6 +48,9 @@
     
     <?php endforeach ?>
 
-    <p>end of results</p>
+    <footer class="attribution">
+        <br /><br />
+        <small><?php echo $yummly['attribution']['html']; ?></small> 
+    </footer>
     
 </div> <!-- #content -->
