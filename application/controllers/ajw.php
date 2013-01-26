@@ -12,7 +12,9 @@ class AJW extends CI_Controller {
         $data['title'] = 'home';
         
         $this->load->view('header_template', $data);
+       // $this->load->view('nav_template');
         $this->load->view('index_view');
+        $this->load->view('footer_template');
     }
     
     public function search() {
@@ -25,12 +27,17 @@ class AJW extends CI_Controller {
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('header_template', $data);
+      //              $this->load->view('nav_template');
             $this->load->view('search_view');
+            $this->load->view('footer_template');
         } else {
             
             $data['yummly'] = $this->yummly_model->search_recipes();
             $this->load->view('header_template', $data);
+           //         $this->load->view('nav_template');
             $this->load->view('search_results_view', $data);
+            $this->load->view('sidebar_view');
+            $this->load->view('footer_template');
         }
 
     }
@@ -40,6 +47,7 @@ class AJW extends CI_Controller {
         
         $this->load->view('header_template', $data);
         $this->load->view('settings_view');
+        $this->load->view('footer_template');
     }
     
     public function inventory() {
@@ -47,6 +55,7 @@ class AJW extends CI_Controller {
         
         $this->load->view('header_template', $data);
         $this->load->view('inventory_view');
+        $this->load->view('footer_template');
     }
     
     public function display($recipe_id) {
@@ -55,6 +64,7 @@ class AJW extends CI_Controller {
         $data['recipe'] = $this->yummly_model->get_recipe($recipe_id);
         $this->load->view('header_template', $data);
         $this->load->view('display_view', $data);
+        $this->load->view('footer_template');
     }
     
 

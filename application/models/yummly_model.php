@@ -36,7 +36,7 @@ class Yummly_model extends CI_Model {
         $decoded_json_data = json_decode(curl_exec($this->ch), true);
         curl_close($this->ch);
         
-        $decoded_json_data['submitted_query'] = $submitted_query;
+        $decoded_json_data['submitted_query'] = urldecode($submitted_query);
         return $decoded_json_data;
         
     }
