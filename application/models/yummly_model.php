@@ -25,11 +25,12 @@ class Yummly_model extends CI_Model {
         
     }
     
-    public function search_recipes() {
+    public function search_recipes($start = NULL) {
 
         $submitted_query = $this->input->post('search_phrase');
-        $search_phrase = 'recipes?q=' . $submitted_query . '&maxResult=10';
-        
+        $settings_string = $this->settings_model->getSettingsSearchString();
+        $search_phrase = 'recipes?q=' . $submitted_query . $settings_string . '&start=' . $start;
+//echo $search_phrase;
         curl_setopt($this->ch, CURLOPT_URL, ($this->BASE_URL . $search_phrase));
         
         // decoded json data

@@ -7,7 +7,7 @@
                         <li><a href="<?php echo site_url('ajw/settings') ?>">Settings</a></li>
                         <li><a href="<?php echo site_url('auth/logout') ?>">Logout</a></li>
                     </ul>
-                    <small>Logged in as: asdf</small>
+                    <center><small>Logged in as: <strong><?php echo $user['first_name'] . '&nbsp&nbsp' . $user['last_name'] ?></strong></small></center>
                 </nav>
                                                 
             </h2>

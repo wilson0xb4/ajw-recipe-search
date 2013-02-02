@@ -5,7 +5,7 @@
     <div class="search_meta">
         <?php echo 'Searched for: "' . $yummly['submitted_query'] 
                 . '", Total Matches Found: ' . $yummly['totalMatchCount'] 
-                . ', Showing 10.'; 
+                . ', Showing ' . $settings['maxResults'] . '.'; 
         ?> 
     </div>
 
