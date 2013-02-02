@@ -39,14 +39,14 @@
 */
 
 // app routings
-$route['ajw/display/(:any)'] = 'ajw/display/$1';
+/*$route['ajw/display/(:any)'] = 'ajw/display/$1';
 $route['ajw/settings'] = 'ajw/settings';
 $route['ajw/inventory'] = 'ajw/inventory';
 $route['ajw/search/(:any)'] = 'ajw/search/$1';
-$route['ajw/search'] = 'ajw/search';
+$route['ajw/search'] = 'ajw/search';*/
 
-$route['default_controller'] = 'ajw/search';
-$route['(:any)'] = 'ajw/$1';
+$route['default_controller'] = 'auth';
+//$route['(:any)'] = 'ajw/$1';
 
 
 

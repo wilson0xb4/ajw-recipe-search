@@ -1,6 +1,6 @@
 <?php
 
-class AJW extends CI_Controller {
+class AJW extends Secure_Controller {
     
     public function __construct() {
         parent::__construct();
@@ -8,36 +8,42 @@ class AJW extends CI_Controller {
     }
     
     public function index() {
-        $data['title'] = 'home';
+        $data['title'] = 'login';
         
-        $this->load->view('header_template', $data);
-       // $this->load->view('nav_template');
-        $this->load->view('index_view');
-        $this->load->view('footer_template');
+        if (!$this->ion_auth->logged_in())
+		{
+			redirect('auth/login');
+		} else {
+            redirect('search');
+        }
+        
     }
     
    public function search() {
-        $this->load->helper('form');
-        $this->load->library('form_validation');
 
         $data['title'] = 'Search';
 
         $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
 
         if ($this->form_validation->run() === FALSE) {
+            print_r($data);
             $this->load->view('header_template', $data);
-      //              $this->load->view('nav_template');
+            $this->load->view('nav_template');
             $this->load->view('search_view');
             $this->load->view('footer_template');
+            
         } else {
             
             $data['yummly'] = $this->yummly_model->search_recipes();
             $this->load->view('header_template', $data);
-           //         $this->load->view('nav_template');
+            $this->load->view('nav_template');
             $this->load->view('search_results_view', $data);
             $this->load->view('sidebar_view');
             $this->load->view('footer_template');
+            
+            
         }
+        
 
     }
     
@@ -45,6 +51,7 @@ class AJW extends CI_Controller {
         $data['title'] = 'settings';
         
         $this->load->view('header_template', $data);
+        $this->load->view('nav_template');
         $this->load->view('settings_view');
         $this->load->view('footer_template');
     }
@@ -53,6 +60,7 @@ class AJW extends CI_Controller {
         $data['title'] = 'inventory';
         
         $this->load->view('header_template', $data);
+        $this->load->view('nav_template');
         $this->load->view('inventory_view');
         $this->load->view('footer_template');
     }
@@ -62,6 +70,7 @@ class AJW extends CI_Controller {
         
         $data['recipe'] = $this->yummly_model->get_recipe($recipe_id);
         $this->load->view('header_template', $data);
+        $this->load->view('nav_template');
         $this->load->view('display_view', $data);
         $this->load->view('footer_template');
     }
