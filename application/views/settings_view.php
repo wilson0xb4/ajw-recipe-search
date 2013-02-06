@@ -2,6 +2,11 @@
 
 <?php echo validation_errors(); ?>
 
+<?php if($this->session->flashdata('infomessage')) {
+    // add style
+    echo $this->session->flashdata('infomessage');
+} ?> 
+
 <?php
 echo form_open('ajw/settings');
 
@@ -12,18 +17,13 @@ $data = array('name' => 'maxResults','placeholder' => 10,'value' => $settings['m
 echo form_label('Max Search Results Displayed: ', 'maxResults');
 echo form_input($data);
 
-echo '<br><br><br><br>future additions...';
+echo '<br><br><br><br>fix formatting, and future additions...';
 echo form_label('Allowed Ingredients: ', 'allowedIngredients');
 echo form_label('Excluded Ingredients: ', 'excludedIngredients');
 echo form_label('Allowed Diets: ', 'allowedDiet');
 echo form_label('Allergies: ', 'allowedAllergy');
 
-//echo $settings[0]['maxResults'] . '<br>' . $settings[0]['requirePictures'];
-
 ?>
-    
-    
-    
     
     <input type="submit" value="Save">
 </form>  

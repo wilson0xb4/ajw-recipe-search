@@ -48,6 +48,4 @@
                 <a href="<?php echo site_url('ajw/search') ?>" title="Recipe Search">
                     Recipe Search
                 </a>
-            </h1>
-
-            
+            </h1> 

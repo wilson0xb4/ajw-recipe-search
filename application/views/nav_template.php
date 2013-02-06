@@ -1,6 +1,5 @@
 			<h2 id="site-description">
-                
-                
+
                 <nav class="main-navigation clearfix span12" role="navigation">
                     <ul>
                         <li><a href="<?php echo site_url('ajw/search') ?>">Search</a></li>
@@ -11,8 +10,6 @@
                 </nav>
                                                 
             </h2>
-            
-            
 
 		</hgroup>
 

@@ -1,11 +1,12 @@
+
 <div id="sidebar" role="complementary" class="span4">
 
-    <?php echo validation_errors(); ?>
+    <?php echo validation_errors(); ?> 
 
     <?php
     $attributes = array('class' => 'searchform', 'role' => 'search');
     echo form_open('ajw/search', $attributes); 
-    ?>
+    ?> 
         <label class="assistive-text" for="s">Search for:</label>
         <input type="search" name="search_phrase" placeholder="Search..." required>
         <input type="submit" value="Search">
@@ -20,4 +21,4 @@
 		
 	</aside> <!-- .widget -->
 
-</div> <!-- #sidebar -->
+</div> <!-- #sidebar --> 

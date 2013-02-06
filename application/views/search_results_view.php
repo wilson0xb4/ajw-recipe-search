@@ -3,9 +3,9 @@
     <h2>Search Results</h2>
 
     <div class="search_meta">
-        <?php echo 'Searched for: "' . $yummly['submitted_query'] 
+        <?php echo 'Searched for: "' . $yummly['q'] 
                 . '", Total Matches Found: ' . $yummly['totalMatchCount'] 
-                . ', Showing ' . $settings['maxResults'] . '.'; 
+                . ', Showing ' . ( $yummly['start'] + 1 ) . '-' . ($yummly['start'] + $settings['maxResults']) . '.'; 
         ?> 
     </div>
 
@@ -15,8 +15,8 @@
 
 		<header class="entry-header">
 			
-            <h1 class="entry-title">
-				<?php echo $recipe['recipeName']; ?>
+            <h1 class="entry-title"> 
+				<?php echo $recipe['recipeName']; ?> 
 			</h1>
 
 			<a href="<?php echo site_url('ajw/display/' . $recipe['id']) ?>" title="Post Heading">
@@ -26,7 +26,7 @@
                     } else {
                         echo '<img src="' . base_url() . 'images/130x180.gif" alt="Post thumbnail" class="thumbnail" />';
                     }
-                ?>
+                ?> 
             </a>
 
         </header> <!-- .entry-header -->
@@ -48,6 +48,8 @@
     
     <?php endforeach ?>
 
+    <p><a href="<?php echo site_url('ajw/search/' . $yummly['q'] . '/' . ($yummly['start'] + $settings['maxResults']) ) ?>">View More Recipes ...</a></p>
+    
     <footer class="attribution">
         <br /><br />
         <small><?php echo $yummly['attribution']['html']; ?></small> 

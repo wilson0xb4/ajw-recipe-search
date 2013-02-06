@@ -8,6 +8,7 @@ class AJW extends Secure_Controller {
         $this->load->model('settings_model');
         $this->settings_model->initialize($this->data['user']['id']);
         
+        // make settings available to views
         $this->data['settings'] = $this->settings_model->getSettingsArray();
     }
     
@@ -23,30 +24,40 @@ class AJW extends Secure_Controller {
         
     }
     
-   public function search() {
+   public function search($q = NULL, $start = 0) {
         $this->data['title'] = 'Search';
         
-        $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
+        if ($q == NULL) {
+            $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
 
-        if ($this->form_validation->run() === FALSE) {
+            if ($this->form_validation->run() === FALSE) {
             
-            $this->load->view('header_template', $this->data);
-            $this->load->view('nav_template');
-            $this->load->view('search_view');
-            $this->load->view('footer_template');
+                $this->load->view('header_template', $this->data);
+                $this->load->view('nav_template');
+                $this->load->view('search_view');
+                $this->load->view('footer_template');
+            
+            } else {
+                $q = $this->input->post('search_phrase');
+                $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start);
+            
+                $this->load->view('header_template', $this->data);
+                $this->load->view('nav_template');
+                $this->load->view('search_results_view', $this->data);
+                $this->load->view('sidebar_view');
+                $this->load->view('footer_template');
+            }
             
         } else {
-            $this->data['yummly'] = $this->yummly_model->search_recipes();
+            $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start);
             
             $this->load->view('header_template', $this->data);
             $this->load->view('nav_template');
             $this->load->view('search_results_view', $this->data);
             $this->load->view('sidebar_view');
             $this->load->view('footer_template');
-            
         }
         
-
     }
     
     public function settings() {
@@ -67,6 +78,8 @@ class AJW extends Secure_Controller {
             
             $this->settings_model->updateSettings();
             
+            // add style
+            $this->session->set_flashdata('infomessage', 'settings were updated! (add style)<br><br><br>');
             redirect('ajw/settings');
             
         }

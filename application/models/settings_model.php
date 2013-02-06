@@ -22,7 +22,7 @@ class Settings_model extends Yummly_model {
         return $query->result_array()[0];
     }
     
-    public function getSettingsSearchString() {
+    public function getSettingsString() {
         $settings = $this->getSettingsArray();
         $query_string = '';
         
@@ -48,3 +48,5 @@ class Settings_model extends Yummly_model {
         $this->db->query("UPDATE settings SET maxResults=$maxResults, requirePictures=$requirePictures WHERE uid=$this->uid");
     }
 }
+/* End of file settings_model.php */
+/* Location: ./application/models/settings_model.php */
