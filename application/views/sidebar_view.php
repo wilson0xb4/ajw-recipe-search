@@ -15,9 +15,18 @@
     
     
 	<aside class="widget">
-		<h3 class="widget-title">Sidebar</h3>
+		<h3 class="widget-title">Ingredient Counts</h3>
         
-        <p>Future search modifiers..</p>
+        <?php
+            foreach ($yummly['ingredient_counts'] as $ingredient => $count) {
+                echo '<a href="' . site_url('ajw/search/' 
+                                 . $yummly['q'] . '/' 
+                                 . $yummly['start'] . '/' 
+                                 . $ingredient ) . '">( - ) </a>' 
+                                 . $ingredient . ' (' . $count . ')<br>';
+            }
+        ?>
+        
 		
 	</aside> <!-- .widget -->
 

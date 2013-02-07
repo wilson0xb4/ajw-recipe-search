@@ -13,7 +13,6 @@ class Secure_Controller extends MY_Controller {
         if($this->ion_auth->logged_in()) {
             $this->the_user = (array) $this->ion_auth->user()->row();
             $this->data['user'] = $this->the_user;
-            //$this->load->vars($data);
         }
         else {
             redirect('/');

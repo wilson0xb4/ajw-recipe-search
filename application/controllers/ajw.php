@@ -10,21 +10,14 @@ class AJW extends Secure_Controller {
         
         // make settings available to views
         $this->data['settings'] = $this->settings_model->getSettingsArray();
+        
     }
     
     public function index() {
-        $this->data['title'] = 'login';
-        
-        if (!$this->ion_auth->logged_in())
-		{
-			redirect('auth/login');
-		} else {
-            redirect('search');
-        }
-        
+        redirect('/');       
     }
     
-   public function search($q = NULL, $start = 0) {
+   public function search($q = NULL, $start = 0, $excluded = NULL) {
         $this->data['title'] = 'Search';
         
         if ($q == NULL) {
@@ -49,7 +42,9 @@ class AJW extends Secure_Controller {
             }
             
         } else {
-            $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start);
+            $this->data['settings']['search'][$q] = $excluded;
+            
+            $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start, $this->data['settings']['search'] );
             
             $this->load->view('header_template', $this->data);
             $this->load->view('nav_template');
@@ -84,15 +79,6 @@ class AJW extends Secure_Controller {
             
         }
         
-    }
-    
-    public function inventory() {
-        $this->data['title'] = 'inventory';
-        
-        $this->load->view('header_template', $this->data);
-        $this->load->view('nav_template');
-        $this->load->view('inventory_view');
-        $this->load->view('footer_template');
     }
     
     public function display($recipe_id) {
