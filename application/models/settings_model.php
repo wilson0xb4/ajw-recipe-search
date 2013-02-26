@@ -14,7 +14,32 @@ class Settings_model extends Yummly_model {
         $this->uid = $uid;
         
 
-        // need to check if user settings were created
+        // need to check if user settings were created (for brand new users)
+    }
+    
+    public function getOptionsArray() {
+        $options['diet'] = $this->getOptions('diet');
+        $options['allergy'] = $this->getOptions('allergy');
+        $options['cuisine'] = $this->getOptions('cuisine');
+        $options['holiday'] = $this->getOptions('holiday');
+        $options['course'] = $this->getOptions('course');
+        
+        $this->db->order_by("useCount", "desc"); 
+        $options['ingredient'] = $this->getOptions('ingredient');
+        
+        return $options;
+    }
+    
+    private function getOptions($table) {
+        
+        $query = $this->db->get('yum_' . $table);
+
+        $options = array();
+        foreach ($query->result_array() as $row) {
+           $options[] = $row;
+        }
+        
+        return $options;
     }
     
     public function getSettingsArray() {

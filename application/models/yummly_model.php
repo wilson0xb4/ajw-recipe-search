@@ -25,22 +25,12 @@ class Yummly_model extends CI_Model {
         
     }
     
-    public function search_recipes($q, $start, $excluded_items = NULL ) {
+    public function search_recipes($q, $start) {
         
-        //print_r($excluded_items);
-        
-        // check for exclusions, create query string
-        $exclusions = '';
-        if ( ! empty($excluded_items) ) {
-            foreach ($excluded_items as $item) {
-                $exclusions .= '&' . urlencode('excludedIngredient[]') . '=' . $item;
-            }
-        }
-
         // get settings, create query string
         $settings_string = $this->settings_model->getSettingsString();
         
-        $search_phrase = 'recipes?q=' . $q . $settings_string . '&start=' . $start . $exclusions;
+        $search_phrase = 'recipes?q=' . $q . $settings_string . '&start=' . $start;
         //echo '<br><br>' . $search_phrase;
         
         curl_setopt($this->ch, CURLOPT_URL, ($this->BASE_URL . $search_phrase));
@@ -95,6 +85,43 @@ class Yummly_model extends CI_Model {
         
         return $decoded_json_data;
         
+    }
+    
+    private function get_meta_table($table) {
+        $meta_url = 'metadata/' . $table;
+        
+        curl_setopt($this->ch, CURLOPT_URL, ($this->BASE_URL . $meta_url));
+        
+        $jsonp_data = curl_exec($this->ch);
+        curl_close($this->ch);
+
+        $jsonp_to_json = substr($jsonp_data, (17 + strlen($table)), -2);
+        
+        $decoded_json_data = json_decode($jsonp_to_json, true);
+
+        return $decoded_json_data;
+    }
+    
+    public function display_meta_table($table) {
+        $decoded_json_data = $this->get_meta_table($table);
+        
+        echo '<pre>';
+        print_r($decoded_json_data);
+        echo '</pre>';
+    }
+    
+    public function create_meta_table($table) {
+        $decoded_json_data = $this->get_meta_table($table);
+        
+        
+        foreach ($decoded_json_data as $data) {
+            
+            $this->db->insert( ('yum_' . $table), $data );
+            
+        }
+
+
+         
     }
     
 }

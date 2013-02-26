@@ -11,17 +11,21 @@ class AJW extends Secure_Controller {
         // make settings available to views
         $this->data['settings'] = $this->settings_model->getSettingsArray();
         
+        foreach ($this->settings_model->getOptionsArray() as $key => $value) {
+            $this->data['settings'][$key] = $value;
+        }
+        
+        
     }
     
     public function index() {
         redirect('/');       
     }
     
-   public function search($q = NULL, $start = 0, $excluded = NULL) {
+   public function search($q = NULL, $start = 0) {
         $this->data['title'] = 'Search';
         
-        if ($q == NULL) {
-            $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
+        $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
 
             if ($this->form_validation->run() === FALSE) {
             
@@ -40,18 +44,6 @@ class AJW extends Secure_Controller {
                 $this->load->view('sidebar_view');
                 $this->load->view('footer_template');
             }
-            
-        } else {
-            $this->data['settings']['search'][$q] = $excluded;
-            
-            $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start, $this->data['settings']['search'] );
-            
-            $this->load->view('header_template', $this->data);
-            $this->load->view('nav_template');
-            $this->load->view('search_results_view', $this->data);
-            $this->load->view('sidebar_view');
-            $this->load->view('footer_template');
-        }
         
     }
     
@@ -62,11 +54,9 @@ class AJW extends Secure_Controller {
 
         if ($this->form_validation->run() === FALSE) {
             
-            //print_r($this->data);
-
             $this->load->view('header_template', $this->data);
             $this->load->view('nav_template');
-            $this->load->view('settings_view');
+            $this->load->view('settings_view', $this->data);
             $this->load->view('footer_template');
             
         } else {
@@ -89,6 +79,15 @@ class AJW extends Secure_Controller {
         $this->load->view('nav_template');
         $this->load->view('display_view', $this->data);
         $this->load->view('footer_template');
+    }
+    
+    public function meta($table, $action = 'display') {
+        if ($action === 'create') {
+            $this->yummly_model->create_meta_table($table);
+        } else {// ($action === 'display') {
+            $this->yummly_model->display_meta_table($table);
+        } 
+        
     }
     
 

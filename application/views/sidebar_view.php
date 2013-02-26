@@ -8,7 +8,7 @@
     echo form_open('ajw/search', $attributes); 
     ?> 
         <label class="assistive-text" for="s">Search for:</label>
-        <input type="search" name="search_phrase" placeholder="Search..." required>
+        <input id="tags" type="search" name="search_phrase" placeholder="Search..." required>
         <input type="submit" value="Search">
     </form>  
     

@@ -1,3 +1,4 @@
+<?php // print_r(get_defined_vars()); ?>
 <div id="content" role="main" class="span7">
     
     <h2>Search Results</h2>

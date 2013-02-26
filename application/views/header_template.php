@@ -1,3 +1,4 @@
+<!--Design by <a href="http://jayj.dk" title="Design by Jayj.dk">Jayj.dk</a>-->
 <!DOCTYPE html>
 <!-- Consider specifying the language of your content by adding the `lang` attribute to <html> -->
 <!--[if lt IE 7]> <html class="no-js ie6"> <![endif]-->
