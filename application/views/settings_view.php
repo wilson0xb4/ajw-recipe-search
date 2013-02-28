@@ -10,23 +10,24 @@
 <?php
 echo form_open('ajw/settings');
 
-//echo form_label('Require Pictures', 'requirePictures');
-echo form_checkbox('requirePictures', 'accept', $settings['requirePictures']) . ' Require Pictures<br>';
-
 $data = array('name' => 'maxResults','placeholder' => 10,'value' => $settings['maxResults']);
 //echo form_label('Max Search Results Displayed: ', 'maxResults');
-echo 'Max Search Results Displayed: ' . form_input($data);
+echo 'Max Search Results Displayed: ' . form_input($data) . '<br>';
+
+//echo form_label('Require Pictures', 'requirePictures');
+echo form_checkbox('requirePictures', 'accept', $settings['requirePictures']) . ' Require Pictures<br><br>';
 
 echo form_label('Diets: ', 'allowedDiet');
 foreach ($settings['diet'] as $diet) {
-    
-    if ($diet['id'] = NULL) {
-        $diet['id'] = FALSE;
-    }
-    
-    echo form_checkbox($diet['id'], 'accept', $diet['id']) . ' ' . $diet['longDescription'] . '<br>'; 
+    echo form_checkbox('diet_' . ($diet['id']), 'accept', $settings['diet_' . $diet['id']]) . ' ' . $diet['longDescription'] . '<br>'; 
 } 
 
+
+echo '<br>' . form_label('Allergies: ', 'allowedAllergy');
+foreach ($settings['allergy'] as $allergy) {
+    echo form_checkbox('allergy_' . ($allergy['id']), 'accept', $settings['allergy_' . $allergy['id']]) . ' ' . $allergy['longDescription'] . '<br>'; 
+} 
+/*
 echo form_label('Allergies: ', 'allowedAllergy'); 
 foreach ($settings['allergy'] as $allergy) {
     
@@ -36,7 +37,7 @@ foreach ($settings['allergy'] as $allergy) {
     echo form_checkbox($allergy['id'], 'accept', $allergy['id']) . ' ' . $allergy['longDescription'] . '<br>'; 
     //echo $allergy['shortDescription'] . '<br>'; 
 } 
-
+*/
 
 
         if (isset($settings['exclusions'])) {

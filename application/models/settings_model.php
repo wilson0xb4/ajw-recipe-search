@@ -18,7 +18,9 @@ class Settings_model extends Yummly_model {
     }
     
     public function getOptionsArray() {
+        $this->db->order_by("id");
         $options['diet'] = $this->getOptions('diet');
+        $this->db->order_by("id");
         $options['allergy'] = $this->getOptions('allergy');
         $options['cuisine'] = $this->getOptions('cuisine');
         $options['holiday'] = $this->getOptions('holiday');
@@ -44,7 +46,7 @@ class Settings_model extends Yummly_model {
     
     public function getSettingsArray() {
         // general settings: maxResults and requirePictures
-        $query = $this->db->query("SELECT maxResults, requirePictures FROM ajw_settings WHERE uid=$this->uid");
+        $query = $this->db->query("SELECT * FROM ajw_settings WHERE uid=$this->uid");
         $settingsArray = $query->result_array()[0];
         
         // excluded ingredients
@@ -52,10 +54,6 @@ class Settings_model extends Yummly_model {
         foreach ($excludedIngredients->result_array() as $row) {
             $settingsArray['exclusions'][] = $row['ingredient'];
         }
-        
-        // diets
-        $query2 = $this->db->query("SELECT did FROM ajw_user_diets WHERE uid=$this->uid");
-        $settingsArray['diets'] = $query2->result_array();
         
         //print_r($settingsArray);
         return $settingsArray;
@@ -66,34 +64,75 @@ class Settings_model extends Yummly_model {
         $settings = $this->getSettingsArray();
         $query_string = '';
         
+        // require pictures
         if ($settings['requirePictures']) {
             $query_string .= '&requirePictures=true';
         }
         
+        // max results
         $query_string .= '&maxResult='. $settings['maxResults'];
         
+        // exclude ingredients
         if (isset($settings['exclusions'])) {
             foreach ($settings['exclusions'] as $excludedIngredient) {
                 $query_string .= '&excludedIngredient[]=' . $excludedIngredient;
             }
         }
         
+        // remap keys as diet id
+        $dietOptions = array();
+        foreach ($this->getOptions('diet') as $diet) {
+            $id = $diet['id'];
+            $dietOptions[$id] = $diet;
+        }
+
+        // allowed diets
+        foreach (array_slice($settings, 3, 5) as $key => $value) {
+            if ($value) {
+                $key_substr = substr($key, 5);
+                
+                $query_string .= '&allowedDiet[]=' . urlencode($dietOptions[$key_substr]['searchValue']);
+            }
+        }
         
-        echo $query_string;
+        // remap keys as allergy id
+        $allergyOptions = array();
+        foreach ($this->getOptions('allergy') as $allergy) {
+            $id = $allergy['id'];
+            $allergyOptions[$id] = $allergy;
+        }
+
+        // allowed allergies
+        foreach (array_slice($settings, 8, 10) as $key => $value) {
+            if ($value) {
+                $key_substr = substr($key, 8);
+                
+                $query_string .= '&allowedAllergy[]=' . urlencode($allergyOptions[$key_substr]['searchValue']);
+            }
+        }
+        
+        //echo $query_string;
         return $query_string;
         
     }
     
     public function updateSettings() {
-        $maxResults = $this->input->post('maxResults');
+        $oldSettings = $this->getSettingsArray();
+        $updateQuery = 'maxResults=' . $this->input->post('maxResults');
         
-        if ($this->input->post('requirePictures') == 'accept') {
-            $requirePictures = 1;
-        } else {
-            $requirePictures = 0;
+        foreach (array_slice($oldSettings, 1) as $key => $value) {
+            if (! ($key === 'maxResults' || $key === 'exclusions') ) {
+                if ( array_key_exists($key, $this->input->post()) ) {
+                    $updateQuery .= ', ' . $key . '=' . $this->input->post($key);
+                } else {
+                    $updateQuery .= ', ' . $key . '=0';
+                }
+            }
         }
         
-        $this->db->query("UPDATE ajw_settings SET maxResults=$maxResults, requirePictures=$requirePictures WHERE uid=$this->uid");
+        $updateQuery = str_replace('accept', 1, $updateQuery);
+
+        $this->db->query("UPDATE ajw_settings SET $updateQuery WHERE uid=$this->uid");
     }
     
     public function excludeIngredient($ingredient) {
