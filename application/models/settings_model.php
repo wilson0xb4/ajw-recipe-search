@@ -43,8 +43,23 @@ class Settings_model extends Yummly_model {
     }
     
     public function getSettingsArray() {
-        $query = $this->db->query("SELECT maxResults, requirePictures FROM settings WHERE uid=$this->uid");
-        return $query->result_array()[0];
+        // general settings: maxResults and requirePictures
+        $query = $this->db->query("SELECT maxResults, requirePictures FROM ajw_settings WHERE uid=$this->uid");
+        $settingsArray = $query->result_array()[0];
+        
+        // excluded ingredients
+        $excludedIngredients = $this->db->query("SELECT ingredient FROM ajw_excluded_ingredients WHERE uid=$this->uid");
+        foreach ($excludedIngredients->result_array() as $row) {
+            $settingsArray['exclusions'][] = $row['ingredient'];
+        }
+        
+        // diets
+        $query2 = $this->db->query("SELECT did FROM ajw_user_diets WHERE uid=$this->uid");
+        $settingsArray['diets'] = $query2->result_array();
+        
+        //print_r($settingsArray);
+        return $settingsArray;
+        
     }
     
     public function getSettingsString() {
@@ -57,6 +72,14 @@ class Settings_model extends Yummly_model {
         
         $query_string .= '&maxResult='. $settings['maxResults'];
         
+        if (isset($settings['exclusions'])) {
+            foreach ($settings['exclusions'] as $excludedIngredient) {
+                $query_string .= '&excludedIngredient[]=' . $excludedIngredient;
+            }
+        }
+        
+        
+        echo $query_string;
         return $query_string;
         
     }
@@ -70,7 +93,19 @@ class Settings_model extends Yummly_model {
             $requirePictures = 0;
         }
         
-        $this->db->query("UPDATE settings SET maxResults=$maxResults, requirePictures=$requirePictures WHERE uid=$this->uid");
+        $this->db->query("UPDATE ajw_settings SET maxResults=$maxResults, requirePictures=$requirePictures WHERE uid=$this->uid");
+    }
+    
+    public function excludeIngredient($ingredient) {
+        $this->db->set('uid', $this->uid);
+        $this->db->set('ingredient', $ingredient);
+        $this->db->insert('ajw_excluded_ingredients'); 
+    }
+    
+    public function includeIngredient($ingredient) {
+        $this->db->where('uid', $this->uid);
+        $this->db->where('ingredient', $ingredient);
+        $this->db->delete('ajw_excluded_ingredients'); 
     }
 }
 /* End of file settings_model.php */

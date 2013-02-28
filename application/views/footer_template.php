@@ -23,10 +23,14 @@
   $(function() {
     var availableTags = [
         
-        <?php
-            foreach ($settings['ingredient'] as $ingredient) {
-                echo '"' . $ingredient['searchValue'] . '",';
+        <?php // list ALL ingredients as javascript array
+            // huge chuck of data, don't load on applicable pages (settings, display)
+            if ( !(($title == 'settings') || ($title == 'display')) ) {
+                foreach ($settings['ingredient'] as $ingredient) {
+                    echo '"' . $ingredient['searchValue'] . '",';
+                } 
             }
+            
         ?>
 
     ];

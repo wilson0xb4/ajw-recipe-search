@@ -11,6 +11,7 @@ class AJW extends Secure_Controller {
         // make settings available to views
         $this->data['settings'] = $this->settings_model->getSettingsArray();
         
+        // get and remap options (diets, allergies, cuisines, holidays, etc.. and giant ingredient array)
         foreach ($this->settings_model->getOptionsArray() as $key => $value) {
             $this->data['settings'][$key] = $value;
         }
@@ -27,23 +28,50 @@ class AJW extends Secure_Controller {
         
         $this->form_validation->set_rules('search_phrase', 'search', 'trim|required|xss_clean|urlencode');
 
-            if ($this->form_validation->run() === FALSE) {
-            
-                $this->load->view('header_template', $this->data);
-                $this->load->view('nav_template');
-                $this->load->view('search_view');
-                $this->load->view('footer_template');
-            
-            } else {
+        // If form submitted isn't valid AND no search parameter ($q) is passed, display the form.
+        if ($this->form_validation->run() === FALSE && $q === NULL) {
+
+            $this->load->view('header_template', $this->data);
+            $this->load->view('nav_template');
+            $this->load->view('search_view');
+            $this->load->view('footer_template');
+
+        } else { // form validated or $q parameter passed
+
+
+            // check for a passed parameter, otherwise grab form input
+            if ($q === NULL) {
                 $q = $this->input->post('search_phrase');
-                $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start);
-            
-                $this->load->view('header_template', $this->data);
-                $this->load->view('nav_template');
-                $this->load->view('search_results_view', $this->data);
-                $this->load->view('sidebar_view');
-                $this->load->view('footer_template');
             }
+
+            $this->data['yummly'] = $this->yummly_model->search_recipes($q, $start);
+
+            $this->load->view('header_template', $this->data);
+            $this->load->view('nav_template');
+            $this->load->view('search_results_view', $this->data);
+            $this->load->view('sidebar_view');
+            $this->load->view('footer_template');
+        }
+        
+    }
+    
+    public function excludeIngredient($exclusion, $q = NULL, $start = 0) {
+        
+        $this->settings_model->excludeIngredient($exclusion);
+        
+        redirect('ajw/search/' . $q . '/' . $start);
+        
+    }
+    
+    public function includeIngredient($inclusion, $q = NULL, $start = 0) {
+        
+        $this->settings_model->includeIngredient($inclusion);
+        
+        if ($q === NULL) {
+            redirect('ajw/settings');
+        } else {
+            redirect('ajw/search/' . $q . '/' . $start);
+        }
         
     }
     
@@ -64,7 +92,7 @@ class AJW extends Secure_Controller {
             $this->settings_model->updateSettings();
             
             // add style
-            $this->session->set_flashdata('infomessage', 'settings were updated! (add style)<br><br><br>');
+            $this->session->set_flashdata('infomessage', 'settings were updated!<br><br><br>');
             redirect('ajw/settings');
             
         }

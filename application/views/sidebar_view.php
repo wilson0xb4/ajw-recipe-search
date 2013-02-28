@@ -12,6 +12,27 @@
         <input type="submit" value="Search">
     </form>  
     
+    <?php
+        
+        if (isset($settings['exclusions'])) {
+            
+            echo '<aside class="widget">';
+                echo '<h3 class="widget-title">Excluded Ingredients</h3>';
+
+
+                    foreach ($settings['exclusions'] as $excludedIngredient) {
+                        echo '<a href="' . site_url('ajw/includeIngredient/' 
+                                         . $excludedIngredient . '/'
+                                         . urlencode($yummly['q']) . '/' 
+                                         . $yummly['start']) . '">( + ) </a>' 
+                                         . urldecode($excludedIngredient) . '<br>';
+                    }
+
+
+
+            echo '</aside> <!-- .widget -->';
+        }
+    ?>
     
     
 	<aside class="widget">
@@ -19,10 +40,10 @@
         
         <?php
             foreach ($yummly['ingredient_counts'] as $ingredient => $count) {
-                echo '<a href="' . site_url('ajw/search/' 
-                                 . $yummly['q'] . '/' 
-                                 . $yummly['start'] . '/' 
-                                 . $ingredient ) . '">( - ) </a>' 
+                echo '<a href="' . site_url('ajw/excludeIngredient/' 
+                                 . $ingredient . '/'
+                                 . urlencode($yummly['q']) . '/' 
+                                 . $yummly['start']) . '">( - ) </a>' 
                                  . $ingredient . ' (' . $count . ')<br>';
             }
         ?>

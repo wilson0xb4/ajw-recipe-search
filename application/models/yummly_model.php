@@ -87,6 +87,7 @@ class Yummly_model extends CI_Model {
         
     }
     
+    // fetch a specific table of meta data from Yummly
     private function get_meta_table($table) {
         $meta_url = 'metadata/' . $table;
         
@@ -102,6 +103,7 @@ class Yummly_model extends CI_Model {
         return $decoded_json_data;
     }
     
+    // display the meta data
     public function display_meta_table($table) {
         $decoded_json_data = $this->get_meta_table($table);
         
@@ -110,10 +112,11 @@ class Yummly_model extends CI_Model {
         echo '</pre>';
     }
     
+    // create a local copy of the meta table
+    // primary key prevents duplicates
     public function create_meta_table($table) {
         $decoded_json_data = $this->get_meta_table($table);
-        
-        
+                
         foreach ($decoded_json_data as $data) {
             
             $this->db->insert( ('yum_' . $table), $data );
