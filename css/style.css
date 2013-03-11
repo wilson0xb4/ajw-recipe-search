@@ -1457,3 +1457,44 @@ input[type="search"] {
     margin-right: auto;
     text-align: center;
 }
+
+.filter_container_multicolumn {
+    text-align: left;
+    -moz-column-count:3; /* Firefox */
+    -webkit-column-count:3; /* Safari and Chrome */
+    column-count:3;
+
+    -moz-column-gap:40px; /* Firefox */
+    -webkit-column-gap:40px; /* Safari and Chrome */
+    column-gap:40px;
+
+    -moz-column-rule:4px outset #ff00ff; /* Firefox */
+    -webkit-column-rule:4px outset #ff00ff; /* Safari and Chrome */
+    column-rule:4px outset #ff00ff;
+    
+    /* top rounded corners, no bottom border*/
+    border-radius: 5px 5px 0px 0px; 
+    -moz-border-radius: 10px 10px 0px 0px; 
+    -webkit-border-radius: 10px 10px 0px 0px; 
+    border: 2px solid #f71570;
+    border-bottom-width: 0px;
+}
+
+.filter_container {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter {
+    display: table-cell;
+    padding: 20px;
+}
+
+.filter ul {
+    text-align: left;
+    list-style: none;
+    list-style-image: none;
+    margin: 0;
+    padding: 0;
+}

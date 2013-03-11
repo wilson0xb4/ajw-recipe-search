@@ -15,8 +15,6 @@ class AJW extends Secure_Controller {
         foreach ($this->settings_model->getOptionsArray() as $key => $value) {
             $this->data['settings'][$key] = $value;
         }
-        
-        
     }
     
     public function index() {

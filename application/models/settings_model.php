@@ -111,9 +111,25 @@ class Settings_model extends Yummly_model {
             }
         }
         
-        //echo $query_string;
+        $query_string .= $this->get_filters_string();
+        
+        echo $query_string;
         return $query_string;
         
+    }
+    
+    private function get_filters_string() {
+        
+        $filter_array = array_splice($this->input->post(), 1);
+        $filter_string = '';
+        
+        foreach ($filter_array as $key => $value) {
+            if ($value === 'accept') {
+                $filter_string .= $filter_array[$key . '-val'];
+            }
+        }
+        
+        return $filter_string;
     }
     
     public function updateSettings() {

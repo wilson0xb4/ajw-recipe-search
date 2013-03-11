@@ -1,16 +1,43 @@
 
 <div id="sidebar" role="complementary" class="span4">
-
-    <?php echo validation_errors(); ?> 
-
-    <?php
-    $attributes = array('class' => 'searchform', 'role' => 'search');
-    echo form_open('ajw/search', $attributes); 
+    <?php // <form>
+        echo validation_errors();
+        
+        $attributes = array('class' => '', 'role' => 'search');
+        echo form_open('ajw/search', $attributes); 
     ?> 
-        <label class="assistive-text" for="s">Search for:</label>
-        <input id="tags" type="search" name="search_phrase" placeholder="Search..." required>
-        <input type="submit" value="Search">
-    </form>  
+    
+        <!-- search -->
+        <aside class="widget">
+            <div class="searchform">
+                <label class="assistive-text" for="s">Search for:</label>
+                <input id="tags" type="search" name="search_phrase" placeholder="Search..." required>
+                <input type="submit" value="Search">
+            </div>
+        </aside> <!-- .widget -->
+
+        <!-- filters -->
+        <aside class="widget">
+             <h3 class="widget-title">Holidays</h3>
+        </aside> <!-- .widget -->
+
+        <aside class="widget">
+             <h3 class="widget-title">Courses</h3>
+        </aside> <!-- .widget -->
+
+        <aside class="widget">
+             <h3 class="widget-title">Cuisines</h3>
+        </aside> <!-- .widget -->
+
+        <aside class="widget">
+             <h3 class="widget-title">Diets</h3>
+        </aside> <!-- .widget -->
+
+        <aside class="widget">
+             <h3 class="widget-title">Allergies</h3>
+        </aside> <!-- .widget -->
+    
+    </form>
     
     <!-- separate section for the current excluded ingredients, hidden while playing with a combined view
     <?php
@@ -36,9 +63,9 @@
     ?>
     -->
     
-    
-	<aside class="widget">
-		<h3 class="widget-title">Exclude Ingredient</h3>
+    <!-- exclude ingredients -->
+    <aside class="widget">
+        <h3 class="widget-title">Exclude Ingredient</h3>
         
         <?php
             if (isset($settings['exclusions'])) {
@@ -71,6 +98,6 @@
         ?>
         
 		
-	</aside> <!-- .widget -->
+    </aside> <!-- .widget -->
 
 </div> <!-- #sidebar --> 
