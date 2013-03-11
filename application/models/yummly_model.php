@@ -45,14 +45,95 @@ class Yummly_model extends CI_Model {
         
 
         // add query "details" to array before return
+        // yummly also returns this data under criteria
         $decoded_json_data['q'] = urldecode($q);
         $decoded_json_data['start'] = $start;
         
-        return $decoded_json_data;
+        $cleaned_search_data = $this->clean_search_data($decoded_json_data);
+        
+        //echo '<pre>'; print_r($cleaned_search_data); echo '</pre>';
+        
+        return $cleaned_search_data;
         
     }
     
-    public function get_ingredient_count($decoded_json) {
+    // check and eliminate situations where an empty variable/array is accessed
+    // not generalized, only checks known problem cases
+    private function clean_search_data($decoded_json) {
+        
+        // remove facetCounts
+        unset($decoded_json['facetCounts'], $decoded_json['criteria']['facetFields']);
+        
+        foreach ($decoded_json['matches'] as &$recipe) {
+            
+            // load filler image when no image is provided
+            if ( ! empty($recipe['smallImageUrls']) ) {
+                // grab first image and use it (later: deal with showing all images)
+                $recipe['smallImageUrls'] = $recipe['smallImageUrls'][0];
+            } else {
+                // replace with filler image
+                $recipe['smallImageUrls'] = base_url() . 'images/130x180.gif';
+            }
+            
+            // attributes/tags (needs work)
+            // this can be moved to its own function, its used twice!
+            if (isset($recipe['attributes'])) {
+                $recipe['tags'] = array();
+                
+                if (isset($recipe['attributes']['course'])) {
+                    $recipe['tags']['course'] = '';
+                    foreach ($recipe['attributes']['course'] as $course) {
+                        $recipe['tags']['course'] .= '<a href="#">' . $course . '</a> ';
+                    }
+                }
+
+                if (isset($recipe['attributes']['holiday'])) {
+                    $recipe['tags']['holiday'] = '';
+                    foreach ($recipe['attributes']['holiday'] as $holiday) {
+                        $recipe['tags']['holiday'] .= '<a href="#">' . $holiday . '</a> ';
+                    }
+                }
+                
+                if (isset($recipe['attributes']['cuisine'])) {
+                    $recipe['tags']['cuisine'] = '';
+                    foreach ($recipe['attributes']['cuisine'] as $cuisine) {
+                        $recipe['tags']['cuisine'] .= '<a href="#">' . $cuisine . '</a> ';
+                    }
+                }
+                
+                if (! empty($recipe['tags'])) {
+                    $recipe['tagsToString'] = 'Tags: ';
+                    foreach ($recipe['tags'] as $tagCategory => $tags) {
+                        $recipe['tagsToString'] .= $tags;
+                    }
+                } else {
+                    $recipe['tagsToString'] = '';
+                }
+                
+            } // end attributes/tags
+            
+            // rating
+            if ($recipe['rating'] === 0) {
+                $recipe['rating'] = '';
+            } else {
+                $recipe['rating'] = 'Rating: ' . $recipe['rating'];
+            }
+            
+            // remove flavor data in every match
+            unset($recipe['flavors']);
+            
+        }
+        
+        return $decoded_json;
+    }
+    
+    // future attributs / tags list
+    private function get_tag_list() {
+        
+    }
+    
+    // count, sort, and return the list of ingredients included in the current search
+    private function get_ingredient_count($decoded_json) {
 
         $ingredient_count = array();
         
@@ -73,6 +154,7 @@ class Yummly_model extends CI_Model {
         return $ingredient_count;
     }
     
+    // grab a recipe from yummly
     public function get_recipe($recipe_id) {
 
         $search_phrase = 'recipe/' . $recipe_id;
@@ -83,8 +165,96 @@ class Yummly_model extends CI_Model {
         $decoded_json_data = json_decode(curl_exec($this->ch), true);
         curl_close($this->ch);
         
-        return $decoded_json_data;
+        //echo '<pre>'; print_r($decoded_json_data); echo '</pre>';
+        $cleaned_recipe_data = $this->clean_recipe_data($decoded_json_data);
         
+        //echo '<pre>'; print_r($cleaned_recipe_data); echo '</pre>';
+        
+        return $cleaned_recipe_data;
+        
+    }
+    
+    // check and eliminate situations where an empty variable/array is accessed
+    // not generalized, only checks known problem cases
+    private function clean_recipe_data($decoded_json) {
+        
+        unset($decoded_json['flavors'], $decoded_json['nutritionEstimates']);
+        
+        // if no image is provided, show nothing
+        if ( ! empty($decoded_json['images'][0]) ) {
+            
+            // grab first image and use it (later: deal with showing all images)
+            $decoded_json['images'] = '<img src="' . $decoded_json['images'][0]['hostedLargeUrl'] . '" />';
+        } else {
+            // replace with filler image
+            $decoded_json['images'] = NULL; //base_url() . 'images/130x180.gif';
+        }
+        
+        // yeild
+        if (isset($decoded_json['yield'])) {
+            $decoded_json['yield'] = 'Yield: ' . $decoded_json['yield'];
+        } else {
+            $decoded_json['yield'] = NULL;
+        }
+        
+        // total time
+        if (isset($decoded_json['totalTime'])) {
+            $decoded_json['totalTime'] = 'Total Time: ' . $decoded_json['totalTime'];
+            
+            // add comma if yield is also set
+            if (isset($decoded_json['yield'])) {
+                $decoded_json['totalTime'] = ', ' . $decoded_json['totalTime'];
+            }
+            
+        } else {
+            $decoded_json['totalTime'] = NULL;
+        }
+        
+        // rating
+        if (isset($decoded_json['rating'])) {
+            $decoded_json['rating'] = 'Rating: ' . $decoded_json['rating'];
+        } else {
+            $decoded_json['rating'] = NULL;
+        }
+        
+        // attributes/tags (needs work)
+        // this can be moved to its own function, its used twice!
+        if (isset($decoded_json['attributes'])) {
+            $decoded_json['tags'] = array();
+
+            if (isset($decoded_json['attributes']['course'])) {
+                $decoded_json['tags']['course'] = '';
+                foreach ($decoded_json['attributes']['course'] as $course) {
+                    $decoded_json['tags']['course'] .= '<a href="#">' . $course . '</a> ';
+                }
+            }
+
+            if (isset($decoded_json['attributes']['holiday'])) {
+                $decoded_json['tags']['holiday'] = '';
+                foreach ($decoded_json['attributes']['holiday'] as $holiday) {
+                    $decoded_json['tags']['holiday'] .= '<a href="#">' . $holiday . '</a> ';
+                }
+            }
+
+            if (isset($decoded_json['attributes']['cuisine'])) {
+                $decoded_json['tags']['cuisine'] = '';
+                foreach ($decoded_json['attributes']['cuisine'] as $cuisine) {
+                    $decoded_json['tags']['cuisine'] .= '<a href="#">' . $cuisine . '</a> ';
+                }
+            }
+
+            if (! empty($decoded_json['tags'])) {
+                $decoded_json['tagsToString'] = 'Tags: ';
+                foreach ($decoded_json['tags'] as $tagCategory => $tags) {
+                    $decoded_json['tagsToString'] .= $tags;
+                }
+            } else {
+                $decoded_json['tagsToString'] = '';
+            }
+
+        } // end attributes/tags
+        
+        return $decoded_json;
     }
     
     // fetch a specific table of meta data from Yummly
@@ -123,8 +293,6 @@ class Yummly_model extends CI_Model {
             
         }
 
-
-         
     }
     
 }

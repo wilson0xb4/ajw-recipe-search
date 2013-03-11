@@ -1,4 +1,4 @@
-<?php //print_r($user); ?>
+<?php //echo '<pre>'; print_r($yummly); echo '</pre>'; //print_r($user);  ?>
 <div id="content" role="main" class="span7">
     
     <h2>Search Results</h2>
@@ -21,13 +21,7 @@
 			</h1>
 
 			<a href="<?php echo site_url('ajw/display/' . $recipe['id']) ?>" title="Post Heading">
-                <?php
-                    if ( ! empty($recipe['smallImageUrls']) ) {
-                        echo '<img src="' . $recipe['smallImageUrls'][0] . '" class="thumbnail" />';
-                    } else {
-                        echo '<img src="' . base_url() . 'images/130x180.gif" alt="Post thumbnail" class="thumbnail" />';
-                    }
-                ?> 
+                <img src="<?php echo $recipe['smallImageUrls']; ?>" class="thumbnail" />
             </a>
 
         </header> <!-- .entry-header -->
@@ -39,11 +33,23 @@
                 echo $ingredient . '<br />';
             } ?>
             
-            <p>Source: <cite><?php echo $recipe['sourceDisplayName']; ?></cite></p>
+            <!--<p>Source: <cite><?php echo $recipe['sourceDisplayName']; ?></cite></p>-->
 
-			<p><a href="<?php echo site_url('ajw/display/' . $recipe['id']) ?>" class="more-link">View more <span class="meta-nav">&rarr;</span></a></p>
+			<p>
+                <a href="<?php echo site_url('ajw/display/' . $recipe['id']) ?>" class="more-link">
+                    View more <span class="meta-nav">&rarr;</span>
+                </a>
+            </p>
 		
         </div> <!-- .entry-content -->
+        
+        <footer class="entry-meta">
+            <?php echo $recipe['rating']; ?><br>
+            Source: <cite><?php echo $recipe['sourceDisplayName']; ?></cite><br>
+            <?php echo $recipe['tagsToString']; ?>
+
+		</footer>
+        
 
 	</section> <!-- .post.hentry -->
     

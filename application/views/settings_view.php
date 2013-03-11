@@ -48,7 +48,7 @@ foreach ($settings['allergy'] as $allergy) {
 
                     foreach ($settings['exclusions'] as $excludedIngredient) {
                         echo '<a href="' . site_url('ajw/includeIngredient/' 
-                                         . $excludedIngredient ) . '">( + ) </a>' 
+                                         . $excludedIngredient ) . '" title="include ingredient!">( + )</a> ' 
                                          . urldecode($excludedIngredient) . '<br>';
                     }
 
