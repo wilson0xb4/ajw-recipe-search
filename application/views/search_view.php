@@ -19,7 +19,12 @@ echo form_open('ajw/search', $attributes);
         <input type="submit" value="Search">
     </div>
     
-    <div class="filter_container">
+    
+    <h3 id="filter_button">filters<br>&or;</h3>
+    <div id="filter_container2">
+    <div class="filter_container" id="filter_container">
+        
+        
         
         <div class="filter">
             <h4>Courses</h4>
@@ -68,6 +73,8 @@ echo form_open('ajw/search', $attributes);
             </ul>
         </div>
 
+        
+    </div>
     </div>
     
 </form>  

@@ -113,7 +113,7 @@ class Settings_model extends Yummly_model {
         
         $query_string .= $this->get_filters_string();
         
-        echo $query_string;
+        //echo $query_string;
         return $query_string;
         
     }

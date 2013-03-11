@@ -1480,10 +1480,16 @@ input[type="search"] {
     border-bottom-width: 0px;
 }
 
+#filter_container2 {
+    display: none;
+}
+
 .filter_container {
     display: table;
     margin-left: auto;
     margin-right: auto;
+    
+
 }
 
 .filter {
@@ -1491,6 +1497,10 @@ input[type="search"] {
     padding: 20px;
 }
 
+.filter h4 {
+        margin-top: 0px;
+    padding-top: 0px;
+}
 .filter ul {
     text-align: left;
     list-style: none;
