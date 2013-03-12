@@ -115,10 +115,10 @@ class Yummly_model extends CI_Model {
             } // end attributes/tags
             
             // rating
-            if ($recipe['rating'] === 0) {
-                $recipe['rating'] = '';
+            if (empty($recipe['rating'])) {
+                $recipe['rating'] = NULL;
             } else {
-                $recipe['rating'] = 'Rating: ' . $recipe['rating'];
+                $recipe['rating'] = 'Rating: ' . $recipe['rating'] . '<br>';
             }
             
             // remove flavor data in every match

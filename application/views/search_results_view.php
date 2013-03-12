@@ -44,7 +44,7 @@
         </div> <!-- .entry-content -->
         
         <footer class="entry-meta">
-            <?php echo $recipe['rating']; ?><br>
+            <?php echo $recipe['rating']; ?>
             Source: <cite><?php echo $recipe['sourceDisplayName']; ?></cite><br>
             <?php echo $recipe['tagsToString']; ?>
 
