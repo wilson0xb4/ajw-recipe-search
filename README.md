@@ -12,6 +12,8 @@ This project has only been tested on a systems running OS X (10.6 and 10.8) and 
 
 1. Copy /ajw into your web root directory.  
 2. Import the most current SQL file (it will drop your CI database, if it exists).  
+3. Rename /ajw/application/config/config_DEV.php to ..../config.php and fill in the base_url (example: http://localhost:8888/ajw/) and the encryption_key (36 randomized characters, I think..).  
+4. Rename /ajw/application/config/database_DEV.php to ..../database.php and fill in your database info.  
 3. Point browser to http://localhost:8888/ajw or something similar.  
 4. Login info  
     * username: admin@admin.com  
