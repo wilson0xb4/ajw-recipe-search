@@ -18,13 +18,13 @@
     </p>    
     
     <footer class="entry-meta">
-        <?php echo $recipe['rating']; ?>
+        <span class="meta-rating"><?php echo $recipe['rating']; ?></span>
         
-        Source: <a href="<?php echo $recipe['source']['sourceRecipeUrl']; ?>">
-                 <cite><?php echo $recipe['source']['sourceDisplayName']; ?></cite></a> 
+        <span class="meta-source">Source: <a href="<?php echo $recipe['source']['sourceRecipeUrl']; ?>">
+                 <cite><?php echo $recipe['source']['sourceDisplayName']; ?></cite></a></span>
         
         
-        <?php echo $recipe['tagsToString']; ?>
+        <span class="meta-tags"><?php echo $recipe['tagsToString']; ?></span>
 
     </footer>
     

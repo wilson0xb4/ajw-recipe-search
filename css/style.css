@@ -1527,3 +1527,8 @@ input[type="search"] {
     width: 50px;
     text-align: center;
 }
+
+.meta-space {
+    margin-right: 10px;
+    margin-left: 10px;
+}

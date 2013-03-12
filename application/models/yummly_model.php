@@ -104,7 +104,7 @@ class Yummly_model extends CI_Model {
                 }
                 
                 if (! empty($recipe['tags'])) {
-                    $recipe['tagsToString'] = 'Tags: ';
+                    $recipe['tagsToString'] = '<span class="meta-space"></span>Tags: ';
                     foreach ($recipe['tags'] as $tagCategory => $tags) {
                         $recipe['tagsToString'] .= $tags;
                     }
@@ -118,7 +118,7 @@ class Yummly_model extends CI_Model {
             if (empty($recipe['rating'])) {
                 $recipe['rating'] = NULL;
             } else {
-                $recipe['rating'] = 'Rating: ' . $recipe['rating'] . '<br>';
+                $recipe['rating'] = 'Rating: ' . $recipe['rating'] . '<span class="meta-space"></span>';
             }
             
             // remove flavor data in every match
@@ -214,7 +214,7 @@ class Yummly_model extends CI_Model {
         
         // rating
         if (isset($decoded_json['rating'])) {
-            $decoded_json['rating'] = 'Rating: ' . $decoded_json['rating'];
+            $decoded_json['rating'] = 'Rating: ' . $decoded_json['rating'] . '<span class="meta-space"></span>';
         } else {
             $decoded_json['rating'] = NULL;
         }
@@ -246,7 +246,7 @@ class Yummly_model extends CI_Model {
             }
 
             if (! empty($decoded_json['tags'])) {
-                $decoded_json['tagsToString'] = 'Tags: ';
+                $decoded_json['tagsToString'] = '<span class="meta-space"></span>Tags: ';
                 foreach ($decoded_json['tags'] as $tagCategory => $tags) {
                     $decoded_json['tagsToString'] .= $tags;
                 }
