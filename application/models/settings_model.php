@@ -118,6 +118,19 @@ class Settings_model extends Yummly_model {
         
     }
     
+    public function get_checked_filters() {
+        $filter_array = array_splice($this->input->post(), 1);
+        $checked_filters = array();
+        
+        foreach ($filter_array as $key => $value) {
+            if ($value === 'accept') {
+                $checked_filters[$key] = TRUE;
+            }
+        }
+        
+        return $checked_filters;
+    }
+    
     private function get_filters_string() {
         
         $filter_array = array_splice($this->input->post(), 1);
@@ -128,7 +141,7 @@ class Settings_model extends Yummly_model {
                 $filter_string .= $filter_array[$key . '-val'];
             }
         }
-        
+
         return $filter_string;
     }
     

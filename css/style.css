@@ -1488,8 +1488,12 @@ input[type="search"] {
     display: table;
     margin-left: auto;
     margin-right: auto;
-    
+}
 
+.filter_container_sidebar .filter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .filter {

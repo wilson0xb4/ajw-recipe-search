@@ -8,34 +8,91 @@
     ?> 
     
         <!-- search -->
-        <aside class="widget">
+        <aside>
             <div class="searchform">
                 <label class="assistive-text" for="s">Search for:</label>
-                <input id="tags" type="search" name="search_phrase" placeholder="Search..." required>
+                <input id="tags" 
+                       type="search" 
+                       name="search_phrase" 
+                       value="<?php echo $yummly['q']; ?>" 
+                       placeholder="Search Again!" 
+                       required>
                 <input type="submit" value="Search">
             </div>
         </aside> <!-- .widget -->
 
         <!-- filters -->
-        <aside class="widget">
-             <h3 class="widget-title">Holidays</h3>
-        </aside> <!-- .widget -->
+<div class="filter_container_sidebar" id="filter_container_sidebar">
+        
+        
+        
+        <div class="filter">
+            <h4>Courses</h4>
 
-        <aside class="widget">
-             <h3 class="widget-title">Courses</h3>
-        </aside> <!-- .widget -->
+            <ul>
+            <?php 
+                $filter_checked;
+                foreach ($settings['course'] as $course) {
+                    echo '<li>'; 
+                    if (array_key_exists($course['id'], $yummly['checkedFilters'])) {
+                        $filter_checked = TRUE;
+                    } else {
+                        $filter_checked = FALSE;
+                    }
+                    
+                    echo form_checkbox($course['id'], 'accept', $filter_checked) . ' ' . $course['description']; 
+                    echo form_hidden($course['id'] . '-val', '&allowedCourse[]=' . $course['searchValue']);
+                    echo '</li>'; 
+                }
+            ?> 
+            </ul>
 
-        <aside class="widget">
-             <h3 class="widget-title">Cuisines</h3>
-        </aside> <!-- .widget -->
+        </div>
+        <div class="filter">
+            <h4>Holidays</h4>
+            
+            <ul>
+            <?php 
+                
+                foreach ($settings['holiday'] as $holiday) {
+                    echo '<li>'; 
+                    if (array_key_exists($holiday['id'], $yummly['checkedFilters'])) {
+                        $filter_checked = TRUE;
+                    } else {
+                        $filter_checked = FALSE;
+                    }
+                    echo form_checkbox($holiday['id'], 'accept', $filter_checked) . ' ' . $holiday['description']; 
+                    echo form_hidden($holiday['id'] . '-val', '&allowedHoliday[]=' . $holiday['searchValue']); 
+                    echo '</li>'; 
+                }
+            ?> 
+            </ul>
+        </div>
+        <div class="filter">
+            <h4>Cuisines</h4>
+            
+            <ul>
+            <?php 
+                
+                foreach ($settings['cuisine'] as $cuisine) {
+                    echo '<li>'; 
+                    if (array_key_exists($cuisine['id'], $yummly['checkedFilters'])) {
+                        $filter_checked = TRUE;
+                    } else {
+                        $filter_checked = FALSE;
+                    }
+                    echo form_checkbox($cuisine['id'], 'accept', $filter_checked) . ' ' . $cuisine['description']; 
+                    echo form_hidden($cuisine['id'] . '-val', '&allowedCuisine[]=' . $cuisine['searchValue']); 
+                    echo '</li>'; 
+                }
+            ?> 
+            </ul>
+        </div>
 
-        <aside class="widget">
-             <h3 class="widget-title">Diets</h3>
-        </aside> <!-- .widget -->
+        
+    </div>
 
-        <aside class="widget">
-             <h3 class="widget-title">Allergies</h3>
-        </aside> <!-- .widget -->
+
     
     </form>
     

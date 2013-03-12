@@ -31,7 +31,7 @@ class Yummly_model extends CI_Model {
         $settings_string = $this->settings_model->getSettingsString();
         
         $search_phrase = 'recipes?q=' . $q . $settings_string . '&start=' . $start;
-        //echo '<br><br>' . $search_phrase;
+    //echo '<br><br>' . $search_phrase;
         
         curl_setopt($this->ch, CURLOPT_URL, ($this->BASE_URL . $search_phrase));
         
@@ -40,18 +40,20 @@ class Yummly_model extends CI_Model {
         curl_close($this->ch);
 
         
+        if (isset($decoded_json_data)) {
+            $decoded_json_data['ingredient_counts'] = $this->get_ingredient_count($decoded_json_data['matches']);
+            $cleaned_search_data = $this->clean_search_data($decoded_json_data);
+        }
         
-        $decoded_json_data['ingredient_counts'] = $this->get_ingredient_count($decoded_json_data['matches']);
         
 
         // add query "details" to array before return
         // yummly also returns this data under criteria
-        $decoded_json_data['q'] = urldecode($q);
-        $decoded_json_data['start'] = $start;
+        $cleaned_search_data['q'] = urldecode($q);
+        $cleaned_search_data['start'] = $start;
+        $cleaned_search_data['checkedFilters'] = $this->settings_model->get_checked_filters();
         
-        $cleaned_search_data = $this->clean_search_data($decoded_json_data);
-        
-        //echo '<pre>'; print_r($cleaned_search_data); echo '</pre>';
+    //echo '<pre>'; print_r($cleaned_search_data); echo '</pre>';
         
         return $cleaned_search_data;
         
