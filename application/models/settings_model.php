@@ -119,12 +119,19 @@ class Settings_model extends Yummly_model {
     }
     
     public function get_checked_filters() {
-        $filter_array = array_splice($this->input->post(), 1);
         $checked_filters = array();
+        $filter_array = $this->input->post();
         
-        foreach ($filter_array as $key => $value) {
-            if ($value === 'accept') {
-                $checked_filters[$key] = TRUE;
+        // if statement to make php errors go away...
+        // real problem needs to be addressed
+        // filters aren't re-posted when using include/exclude ingredient links
+        if (is_array($filter_array)) {
+            $filter_array = array_splice($filter_array, 1);
+        
+            foreach ($filter_array as $key => $value) {
+                if ($value === 'accept') {
+                    $checked_filters[$key] = TRUE;
+                }
             }
         }
         
@@ -133,12 +140,19 @@ class Settings_model extends Yummly_model {
     
     private function get_filters_string() {
         
-        $filter_array = array_splice($this->input->post(), 1);
+        $filter_array = $this->input->post();
         $filter_string = '';
         
-        foreach ($filter_array as $key => $value) {
-            if ($value === 'accept') {
-                $filter_string .= $filter_array[$key . '-val'];
+        // if statement to make php errors go away...
+        // real problem needs to be addressed
+        // filters aren't re-posted when using include/exclude ingredient links
+        if (is_array($filter_array)) {
+            $filter_array = array_splice($filter_array, 1);
+        
+            foreach ($filter_array as $key => $value) {
+                if ($value === 'accept') {
+                    $filter_string .= $filter_array[$key . '-val'];
+                }
             }
         }
 

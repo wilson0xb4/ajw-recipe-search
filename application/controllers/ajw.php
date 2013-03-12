@@ -57,6 +57,8 @@ class AJW extends Secure_Controller {
         
         $this->settings_model->excludeIngredient($exclusion);
         
+        $this->data['ignore'] = TRUE;
+        
         redirect('ajw/search/' . $q . '/' . $start);
         
     }
@@ -64,6 +66,8 @@ class AJW extends Secure_Controller {
     public function includeIngredient($inclusion, $q = NULL, $start = 0) {
         
         $this->settings_model->includeIngredient($inclusion);
+        
+        $this->data['ignore'] = TRUE;
         
         if ($q === NULL) {
             redirect('ajw/settings');
