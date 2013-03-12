@@ -29,6 +29,7 @@ This project has only been tested on a systems running OS X (10.6 and 10.8) and 
 * AJAX
     * Lots of functions would benefit from AJAX.
     * Also improves user experience.
+    * Need to learn javascript / jquery.
 * BUG: Filters
     * When too many filters are selected, weird things happen.
     * Probably, just need to deal with the no results returned scenario.
