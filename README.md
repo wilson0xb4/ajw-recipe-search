@@ -51,6 +51,9 @@ This project has only been tested on a systems running OS X (10.6 and 10.8) and 
     * Utilize all the account features (create user, forgot password, etc).
     * Authenticate correctly (right now all users have to be admin to use the project).
     * Apply theme to IonAuth pages.
+* Validation
+    * Move rules to config file.
+    * Re-evaluate / add rules.
 
 ## Way down the road...
 * "Common" Ingredients
