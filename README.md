@@ -8,8 +8,8 @@ So far, I've been duplicating features of other sites. This progress is nearing 
 
 
 ## Installation
-This project has only been tested on a system using Apache (2.2.22) and a [MAMP](http://mamp.info/) setup (PHP 5.4.4 and MySQL 5.5.25).
-1. Copy /ajw into your web root directory.
+This project has only been tested on a system using Apache (2.2.22) and a [MAMP](http://mamp.info/) setup (PHP 5.4.4 and MySQL 5.5.25).  
+1. Copy /ajw into your web root directory.  
 2. Import the most current SQL file (it will drop your CI database, if it exists).
 3. Point browser to http://localhost:8888/ajw or something similar.
 4. Login info
