@@ -77,3 +77,4 @@ This project has only been tested on a systems running OS X (10.6 and 10.8) and 
     * AllowedIngredient[]
     * maxTotalTime
     * flavors
+    * Nutrition estimates
