@@ -1484,7 +1484,7 @@ input[type="search"] {
     display: none;
 }
 
-.filter_container {
+.filter_container, .settings_container {
     display: table;
     margin-left: auto;
     margin-right: auto;
@@ -1496,13 +1496,14 @@ input[type="search"] {
     margin-right: auto;
 }
 
-.filter {
+.filter, .column {
     display: table-cell;
     padding: 20px;
+    text-align: left;
 }
 
-.filter h4 {
-        margin-top: 0px;
+.filter h4{
+    margin-top: 0px;
     padding-top: 0px;
 }
 .filter ul {
@@ -1511,4 +1512,18 @@ input[type="search"] {
     list-style-image: none;
     margin: 0;
     padding: 0;
+}
+
+.settings_row {
+    text-align: center;
+    
+}
+
+.settings_container input[type="submit"] {
+    margin-left: 30px;
+}
+.settings_container input[type="text"] {
+    margin-right: 30px;
+    width: 50px;
+    text-align: center;
 }
