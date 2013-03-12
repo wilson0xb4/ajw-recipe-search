@@ -5,10 +5,10 @@ Powered by [Yummly API](https://developer.yummly.com)
 So far, I've been duplicating features of other sites. This progress is nearing a "complete" status. Mostly because I won't be working on things much after this quarter.
 
 ## Description
-
+Using the Yummly API, search for recipes based on user settings (diets, allergies, dislikes, cuisine, etc).
 
 ## Installation
-This project has only been tested on a system using Apache (2.2.22) and a [MAMP](http://mamp.info/) setup (PHP 5.4.4 and MySQL 5.5.25).  
+This project has only been tested on a systems running OS X (10.6 and 10.8) and a [MAMP](http://mamp.info/) setup (Apache 2.2.22, PHP 5.4.4, and MySQL 5.5.25).  
 
 1. Copy /ajw into your web root directory.  
 2. Import the most current SQL file (it will drop your CI database, if it exists).  
