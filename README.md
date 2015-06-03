@@ -3,6 +3,7 @@ Powered by [Yummly API](https://developer.yummly.com)
 
 ## Project Status
 2015: Put back on GitHub (and made public) for historic reasons. Project guaranteed not to work in its current state. Because this repository was public at the time, I did not think about protecting API keys. I have now deleted the keys on Yummly's side, so it *shouldn't* be a compromise.
+
 2013: So far, I've been duplicating features of other sites. This progress is nearing a "complete" status. Mostly because I won't be working on things much after this quarter.
 
 ## Description
