@@ -2,24 +2,26 @@
 Powered by [Yummly API](https://developer.yummly.com)
 
 ## Project Status
-So far, I've been duplicating features of other sites. This progress is nearing a "complete" status. Mostly because I won't be working on things much after this quarter.
+2015: Put back on GitHub (and made public) for historic reasons. Project guaranteed not to work in its current state. Because this repository was public at the time, I did not think about protecting API keys. I have now deleted the keys on Yummly's side, so it *shouldn't* be a compromise.
+2013: So far, I've been duplicating features of other sites. This progress is nearing a "complete" status. Mostly because I won't be working on things much after this quarter.
 
 ## Description
 Using the Yummly API, search for recipes based on user settings (diets, allergies, dislikes, cuisine, etc).
 
 ## Installation
-This project has only been tested on a systems running OS X (10.6 and 10.8) and a [MAMP](http://mamp.info/) setup (Apache 2.2.22, PHP 5.4.4, and MySQL 5.5.25). [CodeIgniter](http://ellislab.com/codeigniter/user-guide/) (a php framework) is used, see documentation.
+This project has only been tested on systems running OS X (10.6 and 10.8) and a [MAMP](http://mamp.info/) setup (Apache 2.2.22, PHP 5.4.4, and MySQL 5.5.25). [CodeIgniter](http://ellislab.com/codeigniter/user-guide/) (a php framework) is used, see documentation.
 
-1. Copy /ajw into your web root directory.  
-2. Import the most current SQL file (it will drop your CI database, if it exists).  
-3. Rename /ajw/application/config/config_DEV.php to ..../config.php and fill in the base_url (example: http://localhost:8888/ajw/) and the encryption_key (36 randomized characters, I think..).  
-4. Rename /ajw/application/config/database_DEV.php to ..../database.php and fill in your database info.  
-5. Point browser to http://localhost:8888/ajw or something similar.  
-6. Login info  
-    * username: admin@admin.com  
+1. Copy /ajw into your web root directory.
+2. Import the most current SQL file (it will drop your CI database, if it exists).
+3. Rename /ajw/application/config/config_DEV.php to ..../config.php and fill in the base_url (example: http://localhost:8888/ajw/) and the encryption_key (36 randomized characters, I think..).
+4. Rename /ajw/application/config/database_DEV.php to ..../database.php and fill in your database info.
+5. Point browser to http://localhost:8888/ajw or something similar.
+6. Login info
+    * username: admin@admin.com
     * password: password
 
 ## Todo List
+* Pick better name
 * Autocomplete
     * Limit displayed matches, maybe scrollable list)
     * Yummly matches beginning of words, NOT just any matching string.
